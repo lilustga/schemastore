@@ -29,7 +29,9 @@
       "properties": {
         "destination": {
           "type": "string",
-          "enum": ["Mqtt"],
+          "enum": [
+            "Mqtt"
+          ],
           "default": "Mqtt"
         },
         "topic": {
@@ -39,7 +41,10 @@
         "qos": {
           "type": "integer",
           "description": "The default MQTT quality of service that MQTT messages will be published with",
-          "enum": [0, 1]
+          "enum": [
+            0,
+            1
+          ]
         },
         "ttl": {
           "type": "integer",
@@ -49,11 +54,20 @@
         "retain": {
           "type": "string",
           "description": "The default retain flag value that MQTT messages will be published with.",
-          "enum": ["keep", "never"]
+          "enum": [
+            "keep",
+            "never"
+          ]
         }
       },
       "additionalProperties": false,
-      "required": ["destination", "topic", "qos", "ttl", "retain"]
+      "required": [
+        "destination",
+        "topic",
+        "qos",
+        "ttl",
+        "retain"
+      ]
     },
     "brokerStateStoreDestinationDefaults": {
       "type": "object",
@@ -61,7 +75,9 @@
       "properties": {
         "destination": {
           "type": "string",
-          "enum": ["BrokerStateStore"],
+          "enum": [
+            "BrokerStateStore"
+          ],
           "default": "BrokerStateStore"
         },
         "key": {
@@ -70,7 +86,10 @@
         }
       },
       "additionalProperties": false,
-      "required": ["destination", "key"]
+      "required": [
+        "destination",
+        "key"
+      ]
     },
     "storageDestinationDefaults": {
       "type": "object",
@@ -78,7 +97,9 @@
       "properties": {
         "destination": {
           "type": "string",
-          "enum": ["Storage"],
+          "enum": [
+            "Storage"
+          ],
           "default": "Storage"
         },
         "path": {
@@ -87,7 +108,10 @@
         }
       },
       "additionalProperties": false,
-      "required": ["destination", "path"]
+      "required": [
+        "destination",
+        "path"
+      ]
     },
     "alternativeTypeName": {
       "type": "object",
@@ -103,7 +127,53 @@
         }
       },
       "additionalProperties": false,
-      "required": ["singular", "plural"]
+      "required": [
+        "singular",
+        "plural"
+      ]
+    },
+    "readinessProbe": {
+      "type": "object",
+      "description": "Optional readiness probe for the connector container. When set, the operator injects this into the pod spec and uses the pod's Ready condition for health reporting instead of crash-based detection.",
+      "properties": {
+        "exec": {
+          "type": "object",
+          "description": "Exec specifies a command to execute in the container.",
+          "properties": {
+            "command": {
+              "type": "array",
+              "description": "Command is the command line to execute inside the container, the working directory for the command is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "command"
+          ]
+        },
+        "failureThreshold": {
+          "type": "integer",
+          "description": "Minimum consecutive failures for the probe to be considered failed after having succeeded."
+        },
+        "initialDelaySeconds": {
+          "type": "integer",
+          "description": "Number of seconds after the container has started before the probe is initiated."
+        },
+        "periodSeconds": {
+          "type": "integer",
+          "description": "How often (in seconds) to perform the probe."
+        },
+        "successThreshold": {
+          "type": "integer",
+          "description": "Minimum consecutive successes for the probe to be considered successful after having failed."
+        },
+        "timeoutSeconds": {
+          "type": "integer",
+          "description": "Number of seconds after which the probe times out."
+        }
+      },
+      "additionalProperties": false
     },
     "fieldNecessity": {
       "type": "object",
@@ -112,7 +182,11 @@
         "input": {
           "type": "string",
           "description": "If this field is relevant to this connector or not. If required, the connector cannot function without this field being provided in the specified shape. If unsupported, the connector will ignore any value provided for this field. If optional, the connector can function with or without this field being provided, but the behavior may vary depending on it.",
-          "enum": ["required", "unsupported", "optional"]
+          "enum": [
+            "required",
+            "unsupported",
+            "optional"
+          ]
         },
         "regex": {
           "type": "array",
@@ -130,7 +204,9 @@
           "description": "Additional user-readable context for this field. May explain how the field is used or explain the validation rules around it."
         }
       },
-      "required": ["input"]
+      "required": [
+        "input"
+      ]
     }
   },
   "properties": {
@@ -179,10 +255,16 @@
             "tag": {
               "type": "string",
               "description": "The tag of the container image for this connector"
+            },
+            "readinessProbe": {
+              "$ref": "#/definitions/readinessProbe"
             }
           },
           "additionalProperties": false,
-          "required": ["imageName", "tag"]
+          "required": [
+            "imageName",
+            "tag"
+          ]
         },
         {
           "properties": {
@@ -193,10 +275,16 @@
             "digest": {
               "type": "string",
               "description": "The digest of the container image for this connector"
+            },
+            "readinessProbe": {
+              "$ref": "#/definitions/readinessProbe"
             }
           },
           "additionalProperties": false,
-          "required": ["imageName", "digest"]
+          "required": [
+            "imageName",
+            "digest"
+          ]
         }
       ]
     },
@@ -222,7 +310,9 @@
           }
         },
         "additionalProperties": false,
-        "required": ["secretAlias"]
+        "required": [
+          "secretAlias"
+        ]
       },
       "minItems": 1
     },
@@ -243,7 +333,9 @@
           }
         },
         "additionalProperties": false,
-        "required": ["mountPath"]
+        "required": [
+          "mountPath"
+        ]
       },
       "minItems": 1
     },
@@ -293,7 +385,10 @@
         }
       },
       "additionalProperties": false,
-      "required": ["language", "languageVersion"]
+      "required": [
+        "language",
+        "languageVersion"
+      ]
     },
     "aioMetadata": {
       "type": "object",
@@ -326,7 +421,9 @@
           }
         },
         "additionalProperties": false,
-        "required": ["key"]
+        "required": [
+          "key"
+        ]
       },
       "minItems": 1
     },
@@ -364,9 +461,13 @@
             "type": "object",
             "description": "Describes if this connector expects these fields to be provided in the device definition when deploying the connector. Also describes the expected shape of these values if they are supported.",
             "properties": {
-              "address": { "$ref": "#/definitions/fieldNecessity" }
+              "address": {
+                "$ref": "#/definitions/fieldNecessity"
+              }
             },
-            "required": ["address"],
+            "required": [
+              "address"
+            ],
             "additionalProperties": false
           },
           "assetsEnabledByDefault": {
@@ -384,12 +485,16 @@
             "type": "object",
             "description": "If present, this connector supports using event groups.",
             "properties": {
-              "limits": { "$ref": "#/definitions/modelLimits" },
+              "limits": {
+                "$ref": "#/definitions/modelLimits"
+              },
               "events": {
                 "type": "object",
                 "description": "If present, this connector supports using events.",
                 "properties": {
-                  "limits": { "$ref": "#/definitions/modelLimits" },
+                  "limits": {
+                    "$ref": "#/definitions/modelLimits"
+                  },
                   "eventConfigurationSchema": {
                     "$ref": "http://json-schema.org/draft-07/schema#",
                     "description": "The JSON schema for the \"eventConfiguration\" field on an event group's event."
@@ -409,7 +514,10 @@
                         "$ref": "#/definitions/fieldNecessity"
                       }
                     },
-                    "required": ["dataSource", "typeRef"],
+                    "required": [
+                      "dataSource",
+                      "typeRef"
+                    ],
                     "additionalProperties": false
                   },
                   "destinations": {
@@ -421,13 +529,18 @@
                         "description": "The array of destinations that this asset's events supports.",
                         "items": {
                           "type": "string",
-                          "enum": ["Mqtt", "Storage"]
+                          "enum": [
+                            "Mqtt",
+                            "Storage"
+                          ]
                         }
                       },
                       "defaultDestination": {
                         "description": "The destination that this asset's events will go to by default unless specified otherwise in the asset or the event.",
                         "oneOf": [
-                          { "$ref": "#/definitions/mqttDestinationDefaults" },
+                          {
+                            "$ref": "#/definitions/mqttDestinationDefaults"
+                          },
                           {
                             "$ref": "#/definitions/storageDestinationDefaults"
                           }
@@ -435,10 +548,16 @@
                       }
                     },
                     "additionalProperties": false,
-                    "required": ["supportedDestinations"]
+                    "required": [
+                      "supportedDestinations"
+                    ]
                   }
                 },
-                "required": ["fields", "limits", "destinations"]
+                "required": [
+                  "fields",
+                  "limits",
+                  "destinations"
+                ]
               },
               "alternativeTypeName": {
                 "$ref": "#/definitions/alternativeTypeName",
@@ -455,20 +574,30 @@
                   "dataSource": {
                     "$ref": "#/definitions/fieldNecessity"
                   },
-                  "typeRef": { "$ref": "#/definitions/fieldNecessity" }
+                  "typeRef": {
+                    "$ref": "#/definitions/fieldNecessity"
+                  }
                 },
-                "required": ["dataSource", "typeRef"],
+                "required": [
+                  "dataSource",
+                  "typeRef"
+                ],
                 "additionalProperties": false
               }
             },
             "additionalProperties": false,
-            "required": ["limits", "fields"]
+            "required": [
+              "limits",
+              "fields"
+            ]
           },
           "datasets": {
             "type": "object",
             "description": "If present, this connector supports using datasets.",
             "properties": {
-              "limits": { "$ref": "#/definitions/modelLimits" },
+              "limits": {
+                "$ref": "#/definitions/modelLimits"
+              },
               "datasetConfigurationSchema": {
                 "$ref": "http://json-schema.org/draft-07/schema#",
                 "description": "The JSON schema for the \"datasetConfiguration\" field on a dataset."
@@ -477,7 +606,9 @@
                 "type": "object",
                 "description": "If present, this connector supports using dataset datapoints.",
                 "properties": {
-                  "limits": { "$ref": "#/definitions/modelLimits" },
+                  "limits": {
+                    "$ref": "#/definitions/modelLimits"
+                  },
                   "dataPointConfigurationSchema": {
                     "$ref": "http://json-schema.org/draft-07/schema#",
                     "description": "The JSON schema for the \"dataPointConfiguration\" field on a dataset's datapoint."
@@ -497,7 +628,10 @@
                         "$ref": "#/definitions/fieldNecessity"
                       }
                     },
-                    "required": ["dataSource", "typeRef"],
+                    "required": [
+                      "dataSource",
+                      "typeRef"
+                    ],
                     "additionalProperties": false
                   }
                 }
@@ -513,9 +647,14 @@
                   "dataSource": {
                     "$ref": "#/definitions/fieldNecessity"
                   },
-                  "typeRef": { "$ref": "#/definitions/fieldNecessity" }
+                  "typeRef": {
+                    "$ref": "#/definitions/fieldNecessity"
+                  }
                 },
-                "required": ["dataSource", "typeRef"],
+                "required": [
+                  "dataSource",
+                  "typeRef"
+                ],
                 "additionalProperties": false
               },
               "destinations": {
@@ -527,13 +666,19 @@
                     "description": "The array of destinations that this asset's datasets supports.",
                     "items": {
                       "type": "string",
-                      "enum": ["Mqtt", "BrokerStateStore", "Storage"]
+                      "enum": [
+                        "Mqtt",
+                        "BrokerStateStore",
+                        "Storage"
+                      ]
                     }
                   },
                   "defaultDestination": {
                     "description": "The destination that this asset's datasets will go to by default unless specified otherwise in the asset or the dataset.",
                     "oneOf": [
-                      { "$ref": "#/definitions/mqttDestinationDefaults" },
+                      {
+                        "$ref": "#/definitions/mqttDestinationDefaults"
+                      },
                       {
                         "$ref": "#/definitions/storageDestinationDefaults"
                       },
@@ -544,17 +689,25 @@
                   }
                 },
                 "additionalProperties": false,
-                "required": ["supportedDestinations"]
+                "required": [
+                  "supportedDestinations"
+                ]
               }
             },
             "additionalProperties": false,
-            "required": ["limits", "fields", "destinations"]
+            "required": [
+              "limits",
+              "fields",
+              "destinations"
+            ]
           },
           "managementGroups": {
             "type": "object",
             "description": "If present, this connector supports using management groups.",
             "properties": {
-              "limits": { "$ref": "#/definitions/modelLimits" },
+              "limits": {
+                "$ref": "#/definitions/modelLimits"
+              },
               "managementGroupConfigurationSchema": {
                 "$ref": "http://json-schema.org/draft-07/schema#",
                 "description": "The JSON schema for the \"managementGroupConfiguration\" field on a management group."
@@ -567,7 +720,9 @@
                 "type": "object",
                 "description": "If present, this connector supports using management group actions.",
                 "properties": {
-                  "limits": { "$ref": "#/definitions/modelLimits" },
+                  "limits": {
+                    "$ref": "#/definitions/modelLimits"
+                  },
                   "actionConfigurationSchema": {
                     "$ref": "http://json-schema.org/draft-07/schema#",
                     "description": "The JSON schema for the \"actionConfiguration\" field on a management group's action."
@@ -587,7 +742,10 @@
                         "$ref": "#/definitions/fieldNecessity"
                       }
                     },
-                    "required": ["targetUri", "typeRef"],
+                    "required": [
+                      "targetUri",
+                      "typeRef"
+                    ],
                     "additionalProperties": false
                   },
                   "actionTypes": {
@@ -599,37 +757,58 @@
                         "description": "The array of action types that this asset's management group supports.",
                         "items": {
                           "type": "string",
-                          "enum": ["Call", "Read", "Write"]
+                          "enum": [
+                            "Call",
+                            "Read",
+                            "Write"
+                          ]
                         },
                         "minItems": 1
                       }
                     },
                     "additionalProperties": false,
-                    "required": ["supportedActionTypes"]
+                    "required": [
+                      "supportedActionTypes"
+                    ]
                   }
                 },
                 "additionalProperties": false,
-                "required": ["limits", "fields", "actionTypes"]
+                "required": [
+                  "limits",
+                  "fields",
+                  "actionTypes"
+                ]
               },
               "fields": {
                 "type": "object",
                 "description": "Describes if this connector expects these fields to be provided in the management group definition when deploying the connector. Also describes the expected shape of these values if they are supported.",
                 "properties": {
-                  "typeRef": { "$ref": "#/definitions/fieldNecessity" },
-                  "dataSource": { "$ref": "#/definitions/fieldNecessity" }
+                  "typeRef": {
+                    "$ref": "#/definitions/fieldNecessity"
+                  },
+                  "dataSource": {
+                    "$ref": "#/definitions/fieldNecessity"
+                  }
                 },
-                "required": ["typeRef"],
+                "required": [
+                  "typeRef"
+                ],
                 "additionalProperties": false
               }
             },
             "additionalProperties": false,
-            "required": ["limits", "fields"]
+            "required": [
+              "limits",
+              "fields"
+            ]
           },
           "streams": {
             "type": "object",
             "description": "If present, this connector supports using streams.",
             "properties": {
-              "limits": { "$ref": "#/definitions/modelLimits" },
+              "limits": {
+                "$ref": "#/definitions/modelLimits"
+              },
               "streamConfigurationSchema": {
                 "$ref": "http://json-schema.org/draft-07/schema#",
                 "description": "The JSON schema for the \"streamConfiguration\" field on a stream."
@@ -642,9 +821,13 @@
                 "type": "object",
                 "description": "Describes if this connector expects these fields to be provided in the stream definition when deploying the connector. Also describes the expected shape of these values if they are supported.",
                 "properties": {
-                  "typeRef": { "$ref": "#/definitions/fieldNecessity" }
+                  "typeRef": {
+                    "$ref": "#/definitions/fieldNecessity"
+                  }
                 },
-                "required": ["typeRef"],
+                "required": [
+                  "typeRef"
+                ],
                 "additionalProperties": false
               },
               "destinations": {
@@ -656,13 +839,18 @@
                     "description": "The array of destinations that this asset's streams supports.",
                     "items": {
                       "type": "string",
-                      "enum": ["Mqtt", "Storage"]
+                      "enum": [
+                        "Mqtt",
+                        "Storage"
+                      ]
                     }
                   },
                   "defaultDestination": {
                     "description": "The destination that this asset's streams will go to by default unless unless specified otherwise in the asset or the stream.",
                     "oneOf": [
-                      { "$ref": "#/definitions/mqttDestinationDefaults" },
+                      {
+                        "$ref": "#/definitions/mqttDestinationDefaults"
+                      },
                       {
                         "$ref": "#/definitions/storageDestinationDefaults"
                       }
@@ -670,21 +858,32 @@
                   }
                 },
                 "additionalProperties": false,
-                "required": ["supportedDestinations"]
+                "required": [
+                  "supportedDestinations"
+                ]
               }
             },
-            "required": ["fields", "limits", "destinations"]
+            "required": [
+              "fields",
+              "limits",
+              "destinations"
+            ]
           }
         },
         "additionalProperties": false,
-        "required": ["endpointType", "fields"]
+        "required": [
+          "endpointType",
+          "fields"
+        ]
       },
       "minItems": 1
     },
     "recommendedAllocationPolicy": {
       "type": "string",
       "description": "The recommended configuration to use for allocating device inbound endpoints for the connector instances. Only 'bucketized' is currently supported.",
-      "enum": ["bucketized"]
+      "enum": [
+        "bucketized"
+      ]
     },
     "recommendedReplicas": {
       "type": "integer",
